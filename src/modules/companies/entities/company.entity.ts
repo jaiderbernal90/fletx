@@ -14,7 +14,7 @@ import { Department } from './department.entity';
 import { City } from './city.entity';
 import { User } from '@/modules/users/entities/user.entity';
 
-@Entity()
+@Entity('companies')
 export class Company {
   @PrimaryGeneratedColumn()
   id: number;
