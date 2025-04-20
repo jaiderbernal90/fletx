@@ -1,5 +1,15 @@
 import { Company } from '@/modules/companies/entities/company.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Role } from './role.entity';
 
 @Entity('users')
 export class User {
@@ -27,10 +37,20 @@ export class User {
   @Column({ select: false })
   password: string;
 
-  @Column({ length: 20, default: 'user' })
-  role: string;
+  @ManyToOne(() => Role, role => role.users)
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 
   @ManyToOne(() => Company, company => company.users, { nullable: true })
   @JoinColumn({ name: 'company_id' })
   company: Company;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 }

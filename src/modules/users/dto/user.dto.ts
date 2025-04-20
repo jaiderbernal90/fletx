@@ -9,12 +9,9 @@ import {
   IsStrongPassword,
   MaxLength,
   MinLength,
-  Validate,
 } from 'class-validator';
-import { RoleExistValidator } from '../validators/role-id.validations copy';
-import { CompanyExistValidator } from '../validators/company-id.validations';
 
-export class CreateUserDto {
+export class ResponseUserDto {
   @IsPhoneNumber('CO')
   @IsNotEmpty()
   @MaxLength(20)
@@ -27,7 +24,7 @@ export class CreateUserDto {
   @ApiProperty({ description: 'User position', example: 'Developer' })
   position: string;
 
-  @IsDecimal()
+  @IsDecimal({ decimal_digits: '2' })
   @IsNotEmpty()
   @ApiProperty({ description: 'User salary', example: '1000.00' })
   salary: number;
@@ -35,13 +32,11 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsNumber()
   @ApiProperty({ description: 'User role id', example: '1' })
-  @Validate(RoleExistValidator)
   roleId: number;
 
   @IsNotEmpty()
   @IsNumber()
   @ApiProperty({ description: 'User company id', example: '1' })
-  @Validate(CompanyExistValidator)
   companyId: number;
 
   @IsString()

@@ -1,36 +1,23 @@
-import { Company } from '@/modules/companies/entities/company.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Permission } from './permission.entity';
+import { User } from './user.entity';
 
-@Entity('users')
-export class User {
+@Entity('roles')
+export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 100 })
   name: string;
 
-  @Column({ name: 'last_name', length: 100 })
-  lastName: string;
+  @ManyToMany(() => Permission)
+  @JoinTable({
+    name: 'role_permission',
+    joinColumn: { name: 'role_id' },
+    inverseJoinColumn: { name: 'permission_id' },
+  })
+  permissions?: Permission[];
 
-  @Column({ length: 100 })
-  position: string;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  salary: number;
-
-  @Column({ length: 20 })
-  phone: string;
-
-  @Column({ length: 100, unique: true })
-  email: string;
-
-  @Column({ select: false })
-  password: string;
-
-  @Column({ length: 20, default: 'user' })
-  role: string;
-
-  @ManyToOne(() => Company, company => company.users, { nullable: true })
-  @JoinColumn({ name: 'company_id' })
-  company: Company;
+  @OneToMany(() => User, user => user.role)
+  users?: User[];
 }
