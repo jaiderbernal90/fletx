@@ -33,8 +33,8 @@ export class Company {
   @JoinColumn({ name: 'city_id' })
   city: City;
 
-  @OneToMany(() => Product, product => product.company)
-  products: Product[];
+  @OneToMany(() => Product, product => product.company, { nullable: true })
+  products?: Product[];
 
   @Column({ type: 'varchar', length: 30 })
   phone: string;
@@ -45,8 +45,8 @@ export class Company {
   @Column({ name: 'actives_and_passives', type: 'varchar', length: 255 })
   activesAndPassives: string;
 
-  @OneToMany(() => User, user => user.company)
-  users: User[];
+  @OneToMany(() => User, user => user.company, { nullable: true })
+  users?: User[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
