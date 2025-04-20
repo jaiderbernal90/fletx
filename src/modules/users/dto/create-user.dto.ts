@@ -10,8 +10,9 @@ import {
   MaxLength,
   MinLength,
   Validate,
+  ValidateIf,
 } from 'class-validator';
-import { RoleExistValidator } from '../validators/role-id.validations copy';
+import { RoleExistValidator } from '../validators/role-id.validations';
 import { CompanyExistValidator } from '../validators/company-id.validations';
 
 export class CreateUserDto {
@@ -38,9 +39,9 @@ export class CreateUserDto {
   @Validate(RoleExistValidator)
   roleId: number;
 
-  @IsNotEmpty()
   @IsNumber()
   @ApiProperty({ description: 'User company id', example: '1' })
+  @ValidateIf(o => o.companyId !== null)
   @Validate(CompanyExistValidator)
   companyId: number;
 

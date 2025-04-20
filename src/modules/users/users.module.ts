@@ -7,7 +7,7 @@ import { Role } from './entities/role.entity';
 import { Permission } from './entities/permission.entity';
 import { USERS_SERVICE_TOKEN } from './interfaces/users.service.interface';
 import { CompanyExistValidator } from './validators/company-id.validations';
-import { RoleExistValidator } from './validators/role-id.validations copy';
+import { RoleExistValidator } from './validators/role-id.validations';
 import { Company } from '../companies/entities/company.entity';
 
 @Module({
