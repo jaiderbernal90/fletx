@@ -1,13 +1,9 @@
 import { PERMISSIONS_KEY } from '@/modules/auth/decorators/permissions.decorator';
-import { ROLES_KEY } from '@/modules/auth/decorators/roles.decorator';
 import { ITokenPayload } from '@/modules/users/interfaces/user.interface';
-import { IUsersService, USERS_SERVICE_TOKEN } from '@/modules/users/interfaces/users.service.interface';
 import {
   Injectable,
   CanActivate,
   ExecutionContext,
-  Inject,
-  forwardRef,
   ForbiddenException,
   UnauthorizedException,
   Logger,
@@ -18,75 +14,51 @@ import { Reflector } from '@nestjs/core';
 export class PermissionsGuard implements CanActivate {
   private readonly logger = new Logger(PermissionsGuard.name);
 
-  constructor(
-    private reflector: Reflector,
-    @Inject(forwardRef(() => USERS_SERVICE_TOKEN)) private readonly userSvc: IUsersService,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const user: ITokenPayload = request.user;
-
-    // if (user?.isSuperAdmin) {
-    //   return true;
-    // }
-
-    console.log('user', user);
-
-    const handlerRoles = this.reflector.get<string[]>(ROLES_KEY, context.getHandler()) || [];
-    const classRoles = this.reflector.get<string[]>(ROLES_KEY, context.getClass()) || [];
-    const requiredRoles = [...new Set([...handlerRoles, ...classRoles])];
-
-    const requiredPermissions = this.reflector.getAllAndOverride<string[]>(PERMISSIONS_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (!requiredRoles || requiredRoles.length === 0) {
-      return false;
-    }
-
     try {
-      //   const userRoles = await this.userSvc.findWithRolesByProject(user.userId, projectId);
+      const request = context.switchToHttp().getRequest();
+      const user: ITokenPayload = request.user;
 
-      //   if (!userRoles || userRoles.length === 0) {
-      //     return false;
-      //   }
+      this.logger.debug(`Checking permissions for user: ${user?.id}`);
 
-      //   let targetRole = null;
-      //   for (const userRole of userRoles) {
-      //     if (requiredRoles.includes(userRole.role?.name)) {
-      //       targetRole = userRole;
-      //       break;
-      //     }
-      //   }
+      if (!user || !user.role) {
+        this.logger.warn('User or user role not found in request');
+        return false;
+      }
 
-      //   if (!targetRole || !targetRole.role || !targetRole.role.id) {
-      //     return false;
-      //   }
+      const requiredPermissions =
+        this.reflector.getAllAndOverride<string[]>(PERMISSIONS_KEY, [context.getHandler(), context.getClass()]) || [];
 
-      //   if (!requiredPermissions || requiredPermissions.length === 0) {
-      //     return true;
-      //   }
+      this.logger.debug(`Required permissions: ${requiredPermissions.join(', ')}`);
 
-      //   const roleId = targetRole.role.id;
-      //   const userPermissions = await this.userSvc.findWithPermissions(user.userId, roleId, projectId);
+      if (requiredPermissions.length === 0) {
+        this.logger.debug('No specific permissions required, access granted based on role');
+        return true;
+      }
 
-      //   if (!userPermissions || userPermissions.length === 0) {
-      //     return false;
-      //   }
+      const userPermissions = user.role.permissions || [];
 
-      //   const permissionNames = userPermissions.map(p => p.name);
-      //   const hasPermissions = requiredPermissions.some(permission => permissionNames.includes(permission));
+      if (userPermissions.length === 0) {
+        this.logger.warn('User has no permissions');
+        return false;
+      }
 
-      //   if (!hasPermissions) {
-      //     return false;
-      //   }
+      const permissionNames = userPermissions.map(permission => permission.name);
 
+      const hasRequiredPermissions = requiredPermissions.some(permission => permissionNames.includes(permission));
+
+      if (!hasRequiredPermissions) {
+        this.logger.warn(`User lacks required permissions: [${requiredPermissions.join(', ')}]`);
+        return false;
+      }
+
+      this.logger.debug('Access granted - user has required role and permissions');
       return true;
     } catch (error) {
       if (!(error instanceof ForbiddenException) && !(error instanceof UnauthorizedException)) {
-        this.logger.error(`[PermissionsGuard] Error checking permissions: ${error.message}`, error);
+        this.logger.error(`Error checking permissions: ${error.message}`, error.stack);
         throw new ForbiddenException('You do not have permission to access this resource.');
       }
 
