@@ -74,3 +74,26 @@ export function FindOneUserDecorator() {
     }),
   );
 }
+
+export function FindAllRolesDecorator() {
+  return applyDecorators(
+    Get(),
+    ApiOperation({
+      summary: 'Get all roles',
+      description: 'Retrieves list of all roles according to the provided pagination parameters',
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Roles successfully retrieved',
+      type: PageDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'Unauthorized access',
+    }),
+    ApiResponse({
+      status: HttpStatus.FORBIDDEN,
+      description: 'Insufficient permissions to view roles',
+    }),
+  );
+}
