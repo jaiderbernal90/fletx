@@ -1,15 +1,15 @@
 import { Controller, Body, Param, Query, ParseIntPipe, Inject, UseGuards } from '@nestjs/common';
-import { CreateCompanyDto } from './dto/create-company.dto';
-import { UpdateCompanyDto } from './dto/update-company.dto';
-import { PageOptionsDto } from '@/shared/dtos/pagination/page-options.dto';
-import { COMPANIES_SERVICE_TOKEN, ICompaniesService } from './interfaces/companies.service.interface';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@/shared/guards/auth/auth.guard';
 import { PermissionsGuard } from '@/shared/guards/permissions/permissions.guard';
-import { CreateCompanyDecorator } from './decorators/create.decorator';
-import { DeleteCompanyDecorator } from './decorators/delete.decorator';
-import { FindAllCompanyDecorator, FindOneCompanyDecorator } from './decorators/find.decorator';
-import { UpdateCompanyDecorator } from './decorators/update.decorator';
+import { COMPANIES_SERVICE_TOKEN, ICompaniesService } from '../interfaces/companies.service.interface';
+import { CreateCompanyDto } from '../dto/create-company.dto';
+import { CreateCompanyDecorator } from '../decorators/create.decorator';
+import { FindAllCompanyDecorator, FindOneCompanyDecorator } from '../decorators/find.decorator';
+import { PageOptionsDto } from '@/shared/dtos/pagination/page-options.dto';
+import { UpdateCompanyDecorator } from '../decorators/update.decorator';
+import { DeleteCompanyDecorator } from '../decorators/delete.decorator';
+import { UpdateCompanyDto } from '../dto/update-company.dto';
 
 @Controller('companies')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
