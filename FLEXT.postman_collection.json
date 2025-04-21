@@ -1,0 +1,625 @@
+{
+	"info": {
+		"_postman_id": "be19ecf1-44a0-4865-85d3-f91f8fb1dc16",
+		"name": "FLEXT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14657015",
+		"_collection_link": "https://blue-station-75414.postman.co/workspace/My-Workspace~38b762f7-ac85-4ef5-8f90-903e27303040/collection/14657015-be19ecf1-44a0-4865-85d3-f91f8fb1dc16?action=share&source=collection_link&creator=14657015"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "FIND-ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": \"3109090809\",\r\n    \"email\": \"admin2@admin.com\",\r\n    \"password\":\"Admin2025**\",\r\n    \"position\": \"Administrador\",\r\n    \"name\": \"Admin\",\r\n    \"salary\": \"10000.22\",\r\n    \"lastName\": \"Admin\",\r\n    \"roleId\": 1,\r\n    \"companyId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FIND-ONE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sector\": \"Industrial\",\r\n    \"phone\": \"3123213232\",\r\n    \"address\":\"Calle 123 # 1 - 2\",\r\n    \"activesAndPassives\": \"Venta de software\",\r\n    \"name\": \"Compañia 1\",\r\n    \"cityId\": 1,\r\n    \"departmentId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/users/10",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "COMPANIES",
+			"item": [
+				{
+					"name": "FIND-ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/companies",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FIND-ONE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/companies/5",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sector\": \"Industrial\",\r\n    \"phone\": \"3123213232\",\r\n    \"address\":\"Calle 123 # 1 - 2\",\r\n    \"activesAndPassives\": \"Venta de software\",\r\n    \"name\": \"Compañia 1\",\r\n    \"cityId\": 1,\r\n    \"departmentId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/companies",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/companies/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sector\": \"Industrial\",\r\n    \"phone\": \"3123213232\",\r\n    \"address\":\"Calle 123 # 1 - 2\",\r\n    \"activesAndPassives\": \"Venta de software\",\r\n    \"name\": \"Compañia 1\",\r\n    \"cityId\": 1,\r\n    \"departmentId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/companies/5",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "FIND-ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/products?page=1&take=10",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "take",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FIND-ONE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/products/5",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"products",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Producto 1\",\r\n    \"companyId\": 5,\r\n    \"price\": 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/products",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/products/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Producto EDITADO\",\r\n    \"companyId\": 5,\r\n    \"price\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/products/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"products",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "LOGIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const token = pm.response.json().token\r",
+									"pm.environment.set(\"auth-token\", token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin2025**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LOCATION",
+			"item": [
+				{
+					"name": "CITIES",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/companies",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEPARTMENTS Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/companies",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HELTH",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}",
+					"host": [
+						"{{server}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

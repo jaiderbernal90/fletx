@@ -9,7 +9,7 @@ import { PageMetaDto } from '@/shared/dtos/pagination/page-meta.dto';
 import { Order } from '@/shared/constants/pagination';
 import { PageOptionsDto } from '@/shared/dtos/pagination/page-options.dto';
 import { PageDto } from '@/shared/dtos/pagination/page.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService implements IUsersService {
