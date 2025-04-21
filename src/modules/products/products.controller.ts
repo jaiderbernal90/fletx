@@ -29,7 +29,7 @@ export class ProductsController {
 
   @FindOneProductDecorator()
   findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.productsSvc.findOne({ id });
+    return this.productsSvc.findOne({ id }, { relations: { company: true } });
   }
 
   @UpdateProductDecorator()

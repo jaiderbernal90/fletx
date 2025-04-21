@@ -21,6 +21,9 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  category: string;
+
   @ManyToOne(() => Company, company => company.products)
   @JoinColumn({ name: 'company_id' })
   company: Company;

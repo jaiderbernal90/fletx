@@ -14,6 +14,15 @@ export class CreateProductDto {
   name: string;
 
   @ApiProperty({
+    description: 'Category of the product',
+    example: 'Electronics',
+    maxLength: 50,
+  })
+  @IsString()
+  @IsNotEmpty()
+  category: string;
+
+  @ApiProperty({
     description: 'Price of the product',
     example: 299.99,
     type: Number,
