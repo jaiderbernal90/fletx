@@ -1,38 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Body, Param, Query, ParseIntPipe, Inject, UseGuards } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { CompaniesService } from './services/companies.service';
-import { RequirePermissions } from '../auth/decorators/permissions.decorator';
-import { Permissions } from '@/shared/enum/permissions.enum';
 import { PageOptionsDto } from '@/shared/dtos/pagination/page-options.dto';
+import { COMPANIES_SERVICE_TOKEN, ICompaniesService } from './interfaces/companies.service.interface';
+import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '@/shared/guards/auth/auth.guard';
+import { PermissionsGuard } from '@/shared/guards/permissions/permissions.guard';
+import { CreateCompanyDecorator } from './decorators/create.decorator';
+import { DeleteCompanyDecorator } from './decorators/delete.decorator';
+import { FindAllCompanyDecorator, FindOneCompanyDecorator } from './decorators/find.decorator';
+import { UpdateCompanyDecorator } from './decorators/update.decorator';
 
 @Controller('companies')
+@UseGuards(JwtAuthGuard, PermissionsGuard)
+@ApiTags('Companies')
 export class CompaniesController {
-  constructor(private readonly companiesService: CompaniesService) {}
+  constructor(@Inject(COMPANIES_SERVICE_TOKEN) private readonly companiesSvc: ICompaniesService) {}
 
-  @Post()
+  @CreateCompanyDecorator()
   create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companiesService.create(createCompanyDto);
+    return this.companiesSvc.create(createCompanyDto);
   }
 
-  @Get()
-  @RequirePermissions(Permissions.viewCompany)
+  @FindAllCompanyDecorator()
   async findAll(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.companiesService.findAll(pageOptionsDto);
+    return this.companiesSvc.findAll(pageOptionsDto);
   }
 
-  @Get(':id')
+  @FindOneCompanyDecorator()
   findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.companiesService.findOne({ id });
+    return this.companiesSvc.findOne({ id });
   }
 
-  @Patch(':id')
+  @UpdateCompanyDecorator()
   update(@Param('id', new ParseIntPipe()) id: number, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companiesService.update(id, updateCompanyDto);
+    return this.companiesSvc.update(id, updateCompanyDto);
   }
 
-  @Delete(':id')
+  @DeleteCompanyDecorator()
   remove(@Param('id', new ParseIntPipe()) id: number) {
-    return this.companiesService.remove(id);
+    return this.companiesSvc.remove(id);
   }
 }

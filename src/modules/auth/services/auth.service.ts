@@ -16,8 +16,6 @@ export class AuthService implements IAuthService {
   public async login(dataLogin: LoginDto): Promise<IResponseToken> {
     const { email, password } = dataLogin;
 
-    console.log('dataLogin', dataLogin);
-
     const findUser = await this.userSvc.findOne(
       { email },
       { relations: { role: { permissions: true } }, select: { id: true, name: true, email: true, password: true } },
@@ -25,13 +23,11 @@ export class AuthService implements IAuthService {
     if (!findUser) throw new NotFoundException('User not found');
 
     const { id, password: passwordHash, ...userData } = findUser;
-    console.log('passwordHash', passwordHash);
 
     const checkPassword = await compareHash(password, passwordHash);
     if (!checkPassword) throw new HttpException('Invalid credentials', 403);
 
     const payload = { id, ...userData };
-    console.log('payload', payload);
     const token = this.jwtSvc.sign(payload);
 
     return { token };

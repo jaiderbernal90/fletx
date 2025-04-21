@@ -12,6 +12,7 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 
 @Module({
   imports: [
+    AuthModule,
     ProductsModule,
     UsersModule,
     CompaniesModule,
@@ -26,7 +27,6 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
         ttl: 60 * 1000,
       },
     ]),
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],

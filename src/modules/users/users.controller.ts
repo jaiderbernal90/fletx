@@ -1,57 +1,43 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-  Inject,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Body, Param, ParseIntPipe, Inject, Query, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IUsersService, USERS_SERVICE_TOKEN } from './interfaces/users.service.interface';
 import { PageOptionsDto } from '@/shared/dtos/pagination/page-options.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@/shared/guards/auth/auth.guard';
-import { RequirePermissions } from '../auth/decorators/permissions.decorator';
-import { Permissions } from '@/shared/enum/permissions.enum';
+import { CreateUserDecorator } from './decorators/create.decorator';
+import { FindAllUserDecorator, FindOneUserDecorator } from './decorators/find.decorator';
+import { UpdateUserDecorator } from './decorators/update.decorator';
+import { DeleteUserDecorator } from './decorators/delete.decorator';
 
 @Controller('users')
 @ApiTags('Users')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(@Inject(USERS_SERVICE_TOKEN) private readonly usersService: IUsersService) {}
 
-  @Post()
-  @RequirePermissions(Permissions.createUser)
+  @CreateUserDecorator()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  @RequirePermissions(Permissions.viewUser)
+  @FindAllUserDecorator()
   async findAll(@Query() pageOptionsDto: PageOptionsDto) {
     return await this.usersService.findAll(pageOptionsDto);
   }
 
-  @Get(':id')
-  @RequirePermissions(Permissions.viewUser)
+  @FindOneUserDecorator()
   findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.usersService.findOne({ id });
   }
 
-  @Patch(':id')
-  @RequirePermissions(Permissions.updateUser)
+  @UpdateUserDecorator()
   update(@Param('id', new ParseIntPipe()) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Delete(':id')
-  @RequirePermissions(Permissions.deleteUser)
+  @DeleteUserDecorator()
   remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.usersService.remove(id);
   }

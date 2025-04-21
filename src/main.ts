@@ -7,6 +7,8 @@ import { json } from 'express';
 import { useContainer } from 'class-validator';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './shared/filter/http-exception/http-exception.filter';
 
 const appEnv = appConfig().app;
 
@@ -21,7 +23,12 @@ async function bootstrap() {
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  // app.useGlobalFilters(new HttpExceptionFilter());
+  const config = new DocumentBuilder().setVersion('1.0').setTitle('FLEXT API Documentation').setVersion('1.0').build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
+
+  app.useGlobalFilters(new HttpExceptionFilter());
   const origin = configService.get<string>(appEnv.cors_origin).split(',');
   app.enableCors({
     origin,
