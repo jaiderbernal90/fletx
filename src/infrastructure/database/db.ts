@@ -22,6 +22,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database,
       autoLoadEntities: true,
       synchronize: true,
+      ssl: true,
     };
   }
 }
