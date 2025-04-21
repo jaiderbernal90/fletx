@@ -29,13 +29,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   app.useGlobalFilters(new HttpExceptionFilter());
-  const origin = configService.get<string>(appEnv.cors_origin).split(',');
-  app.enableCors({
-    origin,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  });
+  app.enableCors();
 
   app.use(
     helmet({
