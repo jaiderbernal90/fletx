@@ -35,28 +35,26 @@ $ pnpm install
 ## Running the app
 
 ```bash
-# development
-$ pnpm run start
+# Build Database
+docker compose up --build
+
+# Seed Database
+npm run seed
 
 # watch mode
 $ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
 ```
 
-## Test
+## API Documentation
 
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+### Swagger Documentation
+La documentación de la API está disponible a través de Swagger UI en:
 ```
+/api/docs
+```
+
+### Postman Collection
+Se incluye una colección de Postman (`FLEXT.postman_collection.json`) en la raíz del proyecto que contiene todos los endpoints disponibles.
 
 ## Support
 
