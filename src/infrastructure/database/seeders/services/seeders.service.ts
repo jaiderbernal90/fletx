@@ -24,8 +24,8 @@ export class SeedersService {
     await this.departmentsSeeder.seed();
     await this.citiesSeeder.seed();
     await this.permissionsSeeder.seed();
-    await this.rolesPermissionsSeeder.seed();
     await this.rolesSeeder.seed();
+    await this.rolesPermissionsSeeder.seed();
     await this.usersSeeder.seed();
 
     this.logger.log('Seeding completed!');
